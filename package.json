@@ -1,0 +1,19 @@
+{
+  "name": "cathacombs-of-riverside",
+  "version": "1.0.0",
+  "description": "A simple constructor for cathacombs + a runner in Telegram",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MonMon201/Cathacombs-of-Riverside.git"
+  },
+  "author": "MonMon201",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MonMon201/Cathacombs-of-Riverside/issues"
+  },
+  "homepage": "https://github.com/MonMon201/Cathacombs-of-Riverside#readme"
+}
