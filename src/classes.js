@@ -6,7 +6,8 @@ const functions = require(join(__dirname, 'functions.js'));
 // All classes in the world.
 
 // Lowest structures, they are stored in Rooms.
-// Names of Creatures are uniq - so it's not a problem to track down one, wherever it is...
+// Names of Creatures are uniq - so
+// it's not a problem to track down one, wherever it is...
 class Creature {
   constructor(creatureName) {
     this.creatureName = creatureName;
@@ -15,7 +16,8 @@ class Creature {
 }
 
 // Middle structures, they are stored in Worlds.
-// Indexes are needed to know, which index do they have in the Matrix of their world.
+// Indexes are needed to know, which index
+// do they have in the Matrix of their world.
 class Room {
   constructor(index, creatureList) {
     this.index = index;

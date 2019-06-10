@@ -6,17 +6,20 @@ const functions = require(join(__dirname, 'functions.js'));
 
 // Moving hero through the cathacombs
 const go = (argument, creatureName, ctx, world) => {
-  // We are recieving the number of the room in string type, but we need an index of the room in integer type.
+  // We are recieving the number of the room in string type,
+  // but we need an index of the room in integer type.
   argument = functions.miracleNumbers(argument) - 1;
 
-  // Also, we need to understand, that the argument is correct and we can send it to worlds method.
+  // Also, we need to understand, that the argument
+  // is correct and we can send it to worlds method.
   // Firstly we use CFiW to figure out, in which Room is our Creature.
   // And then we use WF to figure out, what Rooms can we visit.
 
   const exits = functions
     .wayFinder(world.rooms[functions
       .creatureFindingInWorld(world.rooms, creatureName)], world.Matrix);
-  // Using array with exits, we are checking if there any matches with an argument, also count failed comparisons.
+  // Using array with exits, we are checking if
+  // there any matches with an argument, also count failed comparisons.
   let counter = 0;
   for (let i = 0; i < exits.length; i++) {
     if (exits[i] === argument) {
@@ -47,7 +50,8 @@ const ways = (creatureName, ctx, world) => {
       .creatureFindingInWorld(world.rooms, creatureName)], world.Matrix, ctx);
 };
 
-// This function determinates where should commands and arguments go, also it manages additional data.
+// This function determinates where should commands
+// and arguments go, also it manages additional data.
 const determinant = (command, argument, creatureName, ctx, world, bot) => {
   if (command === 'go') {
     bot.command(command, go(argument, creatureName, ctx, world));

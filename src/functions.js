@@ -1,14 +1,17 @@
 'use strict';
 
-// CFiL: CreatureFindingInList. This function finds index of a creature in the CreatureList
+// CFiL: CreatureFindingInList. This function
+// finds index of a Creature in the CreatureList
 const creatureFindingInList = (creatureList, creatureName) => {
   for (let i = 0; i < creatureList.length; i++) {
     if (creatureList[i].creatureName === creatureName) return i;
   }
   return 0;
 };
-// CFiW: CreatureFindingInWorld. This function finds index of a creature in the World.
-// First 'for' initialises search through Rooms, and the second one initialises search through CreatureLists.
+// CFiW: CreatureFindingInWorld. This function finds
+// index of a creature in the World.
+// First 'for' initialises search through Rooms,
+// and the second one initialises search through CreatureLists.
 const creatureFindingInWorld = (rooms, creatureName) => {
   for (let i = 0; i < rooms.length; i++) {
     for (let j = 0; j < rooms[i].creatureList.length; j++) {
@@ -25,10 +28,12 @@ const miracleNumbers = argument => {
   }
 };
 
-// WF: WayFinder. This function finds Rooms, which are connected to our location and write down their indexes.
+// WF: WayFinder. This function finds Rooms,
+// which are connected to our location and write down their indexes.
 // There always at least one.
 // It checks the row of the Room, which are we going to leave
-// Exits - array of exits from the Room, and k is counter of index for the array.
+// Exits - array of exits from the Room,
+// and k is counter of index for the array.
 const wayFinder = (exitRoom, Matrix) => {
   const exits = [];
   let k = 0;
@@ -41,7 +46,8 @@ const wayFinder = (exitRoom, Matrix) => {
   return exits;
 };
 
-// LA: lookAround. This function allows us to understand where we can go from our place.
+// LA: lookAround. This function allows
+// us to understand where we can go from our place.
 const lookAround = (exitRoom, Matrix, ctx) => {
   // Searching for exits from the Room with WF.
   const exits = wayFinder(exitRoom, Matrix);
@@ -49,7 +55,8 @@ const lookAround = (exitRoom, Matrix, ctx) => {
   if (exits.length === 1) {
     ctx.reply('There is only one way - to room number ' + (exits[0] + 1) + '.');
   }
-  // If there are many ways - we are using 'are' and combaining those ways in one line.
+  // If there are many ways - we are
+  // using 'are' and combaining those ways in one line.
   if (exits.length > 1) {
     // Combining line
     let line = '';
