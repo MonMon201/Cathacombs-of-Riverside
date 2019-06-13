@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MonMon201/Cathacombs-of-Riverside/issues"
   },
-  "homepage": "https://github.com/MonMon201/Cathacombs-of-Riverside#readme"
+  "homepage": "https://github.com/MonMon201/Cathacombs-of-Riverside#readme",
+  "dependencies": {
+    "telegraf": "^3.30.1"
+  }
 }

@@ -17,7 +17,7 @@ const go = (argument, creatureName, ctx, world) => {
 
   const exits = functions
     .wayFinder(world.rooms[functions
-      .creatureFindingInWorld(world.rooms, creatureName)], world.Matrix);
+      .creatureFinding(world.rooms, creatureName, 'room')], world.Matrix);
   // Using array with exits, we are checking if
   // there any matches with an argument, also count failed comparisons.
   let counter = 0;
@@ -25,7 +25,7 @@ const go = (argument, creatureName, ctx, world) => {
     if (exits[i] === argument) {
       world
         .moveCreature(world.rooms[functions
-          .creatureFindingInWorld(world.rooms, creatureName)],
+          .creatureFinding(world.rooms, creatureName, 'room')],
         world.rooms[argument], creatureName);
     } else {
       counter++;
@@ -40,14 +40,14 @@ const where = (creatureName, ctx, world) => {
   // Let's find you!
   ctx
     .reply(creatureName + ' is in a room #' + (functions
-      .creatureFindingInWorld(world.rooms, creatureName) + 1));
+      .creatureFinding(world.rooms, creatureName, 'room') + 1));
 };
 
 const ways = (creatureName, ctx, world) => {
   // If you are looking for some ways to go.
   functions
     .lookAround(world.rooms[functions
-      .creatureFindingInWorld(world.rooms, creatureName)], world.Matrix, ctx);
+      .creatureFinding(world.rooms, creatureName, 'room')], world.Matrix, ctx);
 };
 
 // This function determinates where should commands
