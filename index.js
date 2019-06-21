@@ -6,9 +6,10 @@ const token = 'token';
 const join = require('path').join;
 const classes = require(join(__dirname, 'src', 'classes.js'));
 const determinant = require(join(__dirname, 'src', 'determinant.js'));
+const Telegraf = require('telegraf');
 
 // connecting to bot
-const bot = new (require('telegraf'))(token);
+const bot = new Telegraf(require('telegraf'))(token);
 
 // world creation
 const world = new classes.World([]);

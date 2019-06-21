@@ -8,6 +8,7 @@ const creatureFindingInList = (creatureList, creatureName) => {
   }
   return 0;
 };
+
 // CFiW: CreatureFindingInWorld. This function finds
 // index of a creature in the World.
 // First 'for' initialises search through Rooms,
@@ -16,6 +17,24 @@ const creatureFindingInWorld = (rooms, creatureName) => {
   for (let i = 0; i < rooms.length; i++) {
     for (let j = 0; j < rooms[i].creatureList.length; j++) {
       if (rooms[i].creatureList[j].creatureName === creatureName) return i;
+    }
+  }
+};
+
+// CF: creatureFinding. This functions recievs key and
+// returning an index needed. At the first loop we are checking all
+// rooms and at the second one we are cheking all indexes.
+const creatureFinding = (rooms, creatureName, key) => {
+  for (let i = 0; i < rooms.length; i++) {
+    for (let j = 0; j < rooms[i].creatureList.length; j++) {
+      switch (key) {
+      case 'room':
+        if (rooms[i].creatureList[j].creatureName === creatureName) return i;
+        break;
+      case 'list':
+        if (rooms[i].creatureList[j].creatureName === creatureName) return j;
+        break;
+      }
     }
   }
 };
@@ -78,5 +97,6 @@ module.exports = {
   wayFinder,
   creatureFindingInList,
   miracleNumbers,
-  creatureFindingInWorld
+  creatureFindingInWorld,
+  creatureFinding,
 };

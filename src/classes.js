@@ -8,10 +8,10 @@ const functions = require(join(__dirname, 'functions.js'));
 // Lowest structures, they are stored in Rooms.
 // Names of Creatures are uniq - so
 // it's not a problem to track down one, wherever it is...
+// to add uniq Creature name to a pool, use MAP (read about it on docs)
 class Creature {
   constructor(creatureName) {
     this.creatureName = creatureName;
-
   }
 }
 
