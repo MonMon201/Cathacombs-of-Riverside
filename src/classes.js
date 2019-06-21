@@ -78,7 +78,6 @@ class World {
   }
 }
 
-
 // classes for worker-class
 
 module.exports = {
