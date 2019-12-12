@@ -2,22 +2,53 @@
 // Modules
 const join = require('path').join;
 const functions = require(join(__dirname, 'functions.js'));
+const uuidV1 = require('uuid/v1');
 
 // All classes in the world.
 
-// Lowest structures, they are stored in Rooms.
-// Names of Creatures are uniq - so
+// One of lowest structures, they are stored in Rooms.
+// Names of Creatures are not uniq, but we've got IDs now - so
 // it's not a problem to track down one, wherever it is...
-// to add uniq Creature name to a pool, use MAP (read about it on docs)
+// to add Creatures name to the pool, use MAP (read about it on docs)
+
 class Creature {
-  constructor(creatureName) {
+  constructor(creatureName, hp, damage) {
     this.creatureName = creatureName;
+    this.hp = hp;
+    this.damage = damage;
+    this.id = uuidV1();
   }
+  
+  getName(){
+    return this.creatureName;
+  }
+  
+  setDamage(damage){
+    this.damage = damage;
+  }
+
+  getDamage(){
+    return this.damage;
+  }
+
+  setHP(hp){
+    this.hp = hp;
+  }
+
+  getHP(){
+    return this.hp;
+  }
+
+  getID(){
+    return this.id;
+  }
+
 }
 
 // Middle structures, they are stored in Worlds.
 // Indexes are needed to know, which index
 // do they have in the Matrix of their world.
+
 class Room {
   constructor(index, creatureList) {
     this.index = index;
@@ -25,9 +56,30 @@ class Room {
   }
 
   // Method for adding Creatures to Rooms
+
   addCreature(creature) {
     this.creatureList[this.creatureList.length] = creature;
   }
+
+  //Method for removing Creatures from Rooms, it's made here, 
+  //it's better here because we can remove creatures after fight
+
+  removeCreature(creature){
+    this.creatureList
+        .splice(functions
+          .creatureFindingInRoom(this.creatureList, creature), 1);
+  };
+
+  //pretty obviously - fight between creatures.
+  fight(reciever, sender){
+    
+    let recieverIndex = functions.creatureFindingByID(this.creatureList, reciever.getID());
+    let senderIndex = functions.creatureFindingByID(this.creatureList, sender.getID());
+
+    let hpLeft = this.creatureList[recieverIndex].getHP() - this.creatureList[senderIndex].getDamage();
+    (hpLeft <= 0) ? this.removeCreature(this.creatureList[recieverIndex]) : this.creatureList[recieverIndex].setHP(hpLeft);
+  }
+
 }
 
 // Highest structures, they are containing everything in this world.
@@ -46,14 +98,14 @@ class World {
   // This method is pushing a copy of a Creature from the other Room.
   // To find the Creature in the other Room we use CFil
   // Then, we remove the Creature from the first Room with splice method.
-  moveCreature(exitRoom, enterRoom, creatureName) {
+  moveCreature(exitRoom, enterRoom, creature) {
     if (this.Matrix[exitRoom.index][enterRoom.index] === 1) {
       enterRoom.creatureList
         .push(exitRoom.creatureList[functions
-          .creatureFindingInList(exitRoom.creatureList, creatureName)]);
+          .creatureFindingInWorld(this.rooms, creature, 'list')]);
       exitRoom.creatureList
         .splice(functions
-          .creatureFindingInList(exitRoom.creatureList, creatureName));
+          .creatureFindingInWorld(this.rooms, creature, 'list'));
     }
   }
 
@@ -76,6 +128,7 @@ class World {
     this.Matrix[room1.index][room2.index] = 1;
     this.Matrix[room2.index][room1.index] = 1;
   }
+
 }
 
 

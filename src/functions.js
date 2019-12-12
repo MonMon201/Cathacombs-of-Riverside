@@ -1,46 +1,91 @@
 'use strict';
 
-// CFiL: CreatureFindingInList. This function
-// finds index of a Creature in the CreatureList
-const creatureFindingInList = (creatureList, creatureName) => {
-  for (let i = 0; i < creatureList.length; i++) {
-    if (creatureList[i].creatureName === creatureName) return i;
-  }
-  return 0;
-};
+//Finding of a Creature
 
-// CFiW: CreatureFindingInWorld. This function finds
-// index of a creature in the World.
-// First 'for' initialises search through Rooms,
-// and the second one initialises search through CreatureLists.
-const creatureFindingInWorld = (rooms, creatureName) => {
-  for (let i = 0; i < rooms.length; i++) {
-    for (let j = 0; j < rooms[i].creatureList.length; j++) {
-      if (rooms[i].creatureList[j].creatureName === creatureName) return i;
-    }
-  }
-};
-
-// CF: creatureFinding. This functions recievs key and
+// CFiw: creatureFindingInWorld. This functions recievs key and
 // returning an index needed. At the first loop we are checking all
 // rooms and at the second one we are cheking all indexes.
-const creatureFinding = (rooms, creatureName, key) => {
+
+const creatureFindingInWorld = (rooms, creature, key) => {
   for (let i = 0; i < rooms.length; i++) {
     for (let j = 0; j < rooms[i].creatureList.length; j++) {
       switch (key) {
       case 'room':
-        if (rooms[i].creatureList[j].creatureName === creatureName) return i;
+        if (rooms[i].creatureList[j].getID() === creature.getID()) return i;
         break;
       case 'list':
-        if (rooms[i].creatureList[j].creatureName === creatureName) return j;
+        if (rooms[i].creatureList[j].getID() === creature.getID()) return j;
         break;
       }
     }
   }
 };
 
+// Simpler finder, using to find a creature in a room. Used because we can't send a room-array from a room.
+
+const creatureFindingInRoom = (creatureList, creature) => {
+  for (let i = 0; i < creatureList.length; i++) {
+    if (creatureList[i].getID() === creature.getID()) return i;
+  }
+}
+
+// Simpler finder, using ID and returning creatures number in the array
+
+const creatureFindingByID = (creatureList, ID) => {
+  for (let i = 0; i < creatureList.length; i++) {
+    if (creatureList[i].getID() === ID) return i;
+  }
+}
+
+const creatureFindingByNameinRoom = (creatureList, creatureName) => {
+  for (let i = 0; i < creatureList.length; i++) {
+    if (creatureList[i].getName() === creatureName) return i;
+  }
+}
+
+const creatureFindingInWorldbyName = (rooms, creatureName) => {
+  for (let i = 0; i < rooms.length; i++) {
+    for (let j = 0; j < rooms[i].creatureList.length; j++) {
+      switch (key) {
+      case 'room':
+        if (rooms[i].creatureList[j].getName() === creatureName) return i;
+        break;
+      case 'list':
+        if (rooms[i].creatureList[j].getName() === creatureName) return j;
+        break;
+      }
+    }
+  }
+}
+
+const creatureFindingInWorldbyID = (rooms, ID, key) => {
+  for (let i = 0; i < rooms.length; i++) {
+    for (let j = 0; j < rooms[i].creatureList.length; j++) {
+      switch (key) {
+      case 'room':
+        if (rooms[i].creatureList[j].getID() === ID) return i;
+        break;
+      case 'list':
+        if (rooms[i].creatureList[j].getID() === ID) return j;
+        break;
+      }
+    }
+  }
+}
+
+const creatureGetter = (world, ID) => {
+const creature = world.rooms
+[creatureFindingInWorldbyID(world.rooms, ID, 'room')]
+.creatureList
+[creatureFindingByID(world.rooms[creatureFindingInWorldbyID(world.rooms, ID, 'room')]
+.creatureList, ID)];
+
+    return creature;
+}
+
 // MN: MiracleNumbers. This function gets argument from the User,
 // and then translate it from string to integer
+
 const miracleNumbers = argument => {
   if (isNaN(argument) !== true && argument !== undefined && argument !== null) {
     return parseInt(argument);
@@ -53,6 +98,7 @@ const miracleNumbers = argument => {
 // It checks the row of the Room, which are we going to leave
 // Exits - array of exits from the Room,
 // and k is counter of index for the array.
+
 const wayFinder = (exitRoom, Matrix) => {
   const exits = [];
   let k = 0;
@@ -67,6 +113,7 @@ const wayFinder = (exitRoom, Matrix) => {
 
 // LA: lookAround. This function allows
 // us to understand where we can go from our place.
+
 const lookAround = (exitRoom, Matrix, ctx) => {
   // Searching for exits from the Room with WF.
   const exits = wayFinder(exitRoom, Matrix);
@@ -95,8 +142,12 @@ const lookAround = (exitRoom, Matrix, ctx) => {
 module.exports = {
   lookAround,
   wayFinder,
-  creatureFindingInList,
   miracleNumbers,
   creatureFindingInWorld,
-  creatureFinding,
+  creatureFindingInRoom,
+  creatureFindingByID,
+  creatureFindingInWorldbyName,
+  creatureFindingByNameinRoom,
+  creatureFindingInWorldbyID,
+  creatureGetter,
 };
