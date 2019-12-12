@@ -34,13 +34,6 @@ let ID = world.rooms[0].creatureList[0].getID();
 
 // Ear of a bot
 
-let gU = (ctx) => {
-    console.log(ctx.telegram.getUpdates());
-    ctx.telegram.sendSticker(394826579, "https://github.com/MonMon201/Stickers-CoR/blob/master/black-one.png");
-}
-
-bot.on('sticker', ctx => gU(ctx));
-
 bot.on('text', ctx => determinant.ear(ctx, functions.creatureGetter(world, ID), world, bot));
 
 bot.launch();
